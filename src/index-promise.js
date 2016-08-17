@@ -53,59 +53,46 @@ const optionsRequest = {
 };
 
 const myRequest = rp(optionsRequest)
-
-  myRequest
-  .then( ($) => {
-    let Dados = []
-    let obj = {}
-    // Aqui pegamos todos os objetos do DOM com essa classe '.tx_dados_herb'
-    $(ClassList).each(function(i, element){
-      // console.log('i', i)
-      // console.log('this.children[0].data', this.children[0].data)
-      // O VALOR correto vem em this.children[0].data
-      if(options.conditionGetValues(i)) {
-        obj[Fields[i].name] = eval(Fields[i].value)
-      }
-      else if(options.conditionBreakList(i)) {
-        return obj
-      }
-    })
-    console.log('obj', obj)
+const error = (err) => {
+  throw new Error(err)
+}
+const success = ($) => {
+  let Dados = []
+  let obj = {}
+  // Aqui pegamos todos os objetos do DOM com essa classe '.tx_dados_herb'
+  $(ClassList).each(function(i, element){
+    // console.log('i', i)
+    // console.log('this.children[0].data', this.children[0].data)
+    // O VALOR correto vem em this.children[0].data
+    if(options.conditionGetValues(i)) {
+      obj[Fields[i].name] = eval(Fields[i].value)
+    }
+    else if(options.conditionBreakList(i)) {
+      return obj
+    }
   })
-  .catch( (err) => {
-    throw new Error(err)
-  });
+  console.log('obj', obj)
+}
 
-// const crawlerGeneric = (BASE_URL, ClassList, Fields, options) => {
-//   options = options || {}
-//   request(BASE_URL, function (error, response, html) {
-//     if (!error && response.statusCode == 200) {
-//       var $ = cheerio.load(html);
-//       let Dados = []
-//       let obj = {}
-//       // Aqui pegamos todos os objetos do DOM com essa classe '.tx_dados_herb'
-//       $(ClassList).each(function(i, element){
-//         // console.log('i', i)
-//         // console.log('this.children[0].data', this.children[0].data)
-//         // O VALOR correto vem em this.children[0].data
-//         if(options.conditionGetValues(i)) {
-//           obj[Fields[i].name] = eval(Fields[i].value)
-//         }
-//         else if(options.conditionBreakList(i)) {
-//           return obj
-//         }
-//       })
-//       console.log('obj', obj)
-//     }
-//   });
-// }
+const crawlerGeneric = (BASE_URL, ClassList, Fields, options) => {
+  myRequest
+  .then(success)
+  .catch(error)
+}
 
 const options = {
   conditionGetValues: (i) => i>0 && i<5,
   conditionBreakList: (i) => i >= 5
 }
 
-// crawlerGeneric(BASE_URL, ClassList, Fields, options)
+crawlerGeneric(BASE_URL, ClassList, Fields, options)
+
+// RESULTADO:
+// { Instituicao: 'UEPB (Universidade Estadual da Para�ba) ',
+//   Departamento: 'Biologia',
+//   Endereco: 'Centro de Ci�ncias Biol�gicas e da Sa�de, N�351 - Bairro: Universit�rio - CEP:58429-500 ',
+//   MunicipioUF: 'Campina Grande/PB ' }
+
 
 // i 0
 // this 2016-02-12 | 16:23:49 
