@@ -13,15 +13,7 @@ const infos = '.tx_dados_herb'
 // Colocar todos os nomes dos atributos que irão para o OBJETO
 // em ORDEM e quando não existir ou não quiser o valor
 // COLOQUE como ''
-const indexData = [
-  '',
-  'Instituicao',
-  'Departamento',
-  'Endereco',
-  'MunicipioUF'
-]
-
-const ClassList = '.tx_dados_herb'
+const ElementList = '.tx_dados_herb'
 const Fields = [
   {
     name: '',
@@ -60,24 +52,16 @@ const success = ($) => {
   let Dados = []
   let obj = {}
   // Aqui pegamos todos os objetos do DOM com essa classe '.tx_dados_herb'
-  $(ClassList).each(function(i, element){
-    // console.log('i', i)
-    // console.log('this.children[0].data', this.children[0].data)
-    // O VALOR correto vem em this.children[0].data
+  $(ElementList).each(function(i, element){
+    // O VALOR correto vem em this.children[0].data 
+    // que está em Fields[i].value por isso o eval
     if(options.conditionGetValues(i)) {
       obj[Fields[i].name] = eval(Fields[i].value)
     }
     else if(options.conditionBreakList(i)) {
-      return obj
+      return callback(obj)
     }
   })
-  console.log('obj', obj)
-}
-
-const crawlerGeneric = (BASE_URL, ClassList, Fields, options) => {
-  myRequest
-  .then(success)
-  .catch(error)
 }
 
 const options = {
@@ -85,7 +69,17 @@ const options = {
   conditionBreakList: (i) => i >= 5
 }
 
-crawlerGeneric(BASE_URL, ClassList, Fields, options)
+const crawlerGeneric = (BASE_URL, ElementList, Fields, options) => {
+  myRequest
+  .then(success)
+  .catch(error)
+}
+
+const callback = (obj) => { 
+  console.log('Dados: ', obj)
+  return false
+}
+crawlerGeneric(BASE_URL, ElementList, Fields, options, callback)
 
 // RESULTADO:
 // { Instituicao: 'UEPB (Universidade Estadual da Para�ba) ',
