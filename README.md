@@ -112,6 +112,8 @@ crawlerGeneric(BASE_URL, ElementList, Fields, options, callback)
 > Claro que irei explicar parte a parte!
 
 
+![TE AMO](https://media.giphy.com/media/26BRsVk2noIIPHjKU/giphy.gif)
+
 #### BASE_URL
 
 URL a ser pesquisada
