@@ -23,6 +23,7 @@
   "homepage": "https://github.com/suissa/sbb-rede-brasileira-herbarios-crawler#readme",
   "dependencies": {
     "cheerio": "^0.20.0",
-    "nightmare": "^2.6.1"
+    "nightmare": "^2.6.1",
+    "request-promise": "^4.1.1"
   }
 }
